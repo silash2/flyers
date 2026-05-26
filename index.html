@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nooteo - Générateur de Pitch & Flyer Commercial</title>
+    <style>
+        :root {
+            --primary-color: #1e3a8a;
+            --primary-hover: #1e40af;
+            --accent-color: #0d9488;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 450px 1fr;
+            gap: 25px;
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        header {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, var(--primary-color), #2563eb);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            margin-bottom: 10px;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        header p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        .panel-controls {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px rgb(0 0 0 / 0.1);
+            height: fit-content;
+        }
+
+        .panel-preview {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 10px rgb(0 0 0 / 0.05);
+            position: relative;
+            min-height: 600px;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid var(--border-color);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.15);
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: #f1f5f9;
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .checkbox-label input {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-color);
+        }
+
+        .radio-btn-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .radio-btn {
+            flex: 1;
+            text-align: center;
+        }
+
+        .radio-btn input {
+            display: none;
+        }
+
+        .radio-btn span {
+            display: block;
+            padding: 10px;
+            background: #f1f5f9;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .radio-btn input:checked + span {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .btn-action {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-align: center;
+            text-decoration: none;
+            margin-top: 15px;
+        }
+
+        .btn-action:hover {
+            background: #0f766e;
+        }
+
+        /* FLYER DESIGN PREVIEW */
+        .flyer {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            color: #334155;
+        }
+
+        .flyer-header {
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+        }
+
+        .flyer-logo {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .flyer-tagline {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .flyer h2 {
+            font-size: 1.8rem;
+            color: #1e293b;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .flyer-intro {
+            font-size: 1.1rem;
+            color: #475569;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .agency-name-highlight {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .modules-grid {
+            margin: 25px 0;
+            display: block;
+        }
+
+        .module-card {
+            background: #f8fafc;
+            border-left: 4px solid var(--accent-color);
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .module-card h4 {
+            font-size: 1.05rem;
+            color: #0f172a;
+            margin-bottom: 5px;
+        }
+
+        .module-card p {
+            font-size: 0.9rem;
+            color: #475569;
+        }
+
+        .flyer-features {
+            margin: 25px 0;
+            background: #f1f5f9;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .flyer-features h3 {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            color: var(--primary-color);
+        }
+
+        .flyer-features ul {
+            list-style-type: none;
+        }
+
+        .flyer-features li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .flyer-features li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .flyer-footer {
+            margin-top: 35px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .badge-free {
+            display: inline-block;
+            background: #b91c1c;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .print-btn {
+            margin-top: 20px;
+            background: #475569;
+        }
+        
+        .print-btn:hover {
+            background: #334155;
+        }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .panel-controls, header { display: none !important; }
+            .container { grid-template-columns: 1fr; }
+            .panel-preview { border: none; box-shadow: none; padding: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Nooteo Commercial Kit</h1>
+        <p>Générez instantanément un flyer personnalisé et adapté aux activités cibles de votre prospect.</p>
+    </header>
+
+    <div class="container">
+        <!-- CONTROL PANEL -->
+        <div class="panel-controls">
+            <div class="section-title">1. Langue / Language</div>
+            <div class="form-group">
+                <div class="radio-btn-group">
+                    <label class="radio-btn">
+                        <input type="radio" name="lang" value="fr" checked onchange="updateFlyer()">
+                        <span>Français</span>
+                    </label>
+                    <label class="radio-btn">
+                        <input type="radio" name="lang" value="en" onchange="updateFlyer()">
+                        <span>English</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="section-title">2. Informations Agence</div>
+            <div class="form-group">
+                <label for="agencyName">Nom du prospect / de l'agence</label>
+                <input type="text" id="agencyName" value="Exotic Travel & Lodges" oninput="updateFlyer()">
+            </div>
+
+            <div class="section-title">3. Secteurs d'activités à inclure</div>
+            <div class="form-group">
+                <div class="checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="chkTour" checked onchange="updateFlyer()">
+                        Tour Opérateur / Circuits
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="chkHotel" checked onchange="updateFlyer()">
+                        Hôtel / Lodge
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="chkCar" checked onchange="updateFlyer()">
+                        Location de Voiture
+                    </label>
+                </div>
+            </div>
+
+            <button class="btn-action print-btn" onclick="window.print()">🖨️ Imprimer / Sauvegarder en PDF</button>
+        </div>
+
+        <!-- LIVE PREVIEW PANEL -->
+        <div class="panel-preview">
+            <div id="flyerContent" class="flyer">
+                <!-- Content injected dynamically via JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const dictionary = {
+            fr: {
+                tagline: "Plateforme Touristique Intégrée",
+                title: "Concentrez-vous sur vos voyageurs, Nooteo s'occupe du reste !",
+                intro: "Bonjour l'équipe de <span class='agency-name-highlight' id='view-agency'></span>,<br><br>Gérer simultanément plusieurs facettes du tourisme demande un temps précieux. Nooteo vous propose de centraliser votre visibilité sans ajouter de tâches administratives complexes à votre quotidien.",
+                sectorTitle: "Une visibilité sur-mesure pour vos métiers :",
+                tourTitle: "🌐 Module Tour Opérateur & Circuits",
+                tourDesc: "Vos itinéraires et excursions sont propulsés sur des cartes interactives intelligentes, captant les voyageurs dès la planification de leur voyage.",
+                hotelTitle: "🏨 Module Hébergement & Lodge",
+                hotelDesc: "Votre établissement est directement géolocalisé et connecté aux circuits régionaux. Les clients réservent là où l'aventure se déroule.",
+                carTitle: "🚗 Module Flotte & Location de Véhicules",
+                carDesc: "Proposez vos voitures comme solution logistique naturelle dès que le client planifie ou valide son circuit sur notre carte.",
+                featuresTitle: "Pourquoi choisir Nooteo ?",
+                feat1: "Zéro maintenance de page : Vos contenus sont optimisés et mis en valeur automatiquement.",
+                feat2: "Visibilité accrue : Atteignez une clientèle nationale et internationale qualifiée.",
+                feat3: "Technologie moderne : Solution 'API-First' avec cartes GPS interactives et avis vérifiés.",
+                freeBadge: "Zéro Abonnement Obligatoire",
+                footerText: "Rejoignez l'écosystème Nooteo dès aujourd'hui sous notre formule Freemium et commencez sans frais fixes."
+            },
+            en: {
+                tagline: "Integrated Tourism Platform",
+                title: "Focus on your travelers, Nooteo takes care of the rest!",
+                intro: "Hello to the team at <span class='agency-name-highlight' id='view-agency'></span>,<br><br>Managing multiple facets of tourism takes precious time. Nooteo helps you centralize your visibility without adding complex administrative tasks to your daily routine.",
+                sectorTitle: "Tailored visibility for your specific operations:",
+                tourTitle: "🌐 Tour Operator & Itineraries Module",
+                tourDesc: "Your itineraries and day-trips are promoted on smart interactive maps, capturing travelers right from their initial planning phase.",
+                hotelTitle: "🏨 Accommodation & Lodge Module",
+                hotelDesc: "Your property is directly geolocated and linked to regional circuits. Clients book exactly where the experience happens.",
+                carTitle: "🚗 Fleet & Car Rental Module",
+                carDesc: "Offer your vehicles as a natural logistical solution the moment a customer plans or confirms their trip on our map.",
+                featuresTitle: "Why choose Nooteo?",
+                feat1: "Zero page maintenance: Your content is automatically optimized and highlighted.",
+                feat2: "Increased visibility: Reach qualified domestic and international travelers.",
+                feat3: "Modern technology: 'API-First' solution with interactive GPS maps and verified reviews.",
+                freeBadge: "No Mandatory Subscription",
+                footerText: "Join the Nooteo ecosystem today under our Freemium model and start without any fixed costs."
+            }
+        };
+
+        function updateFlyer() {
+            // Get active language
+            const lang = document.querySelector('input[name="lang"]:checked').value;
+            const dict = dictionary[lang];
+            
+            // Get field values
+            const agencyName = document.getElementById('agencyName').value || "Votre Agence";
+            const showTour = document.getElementById('chkTour').checked;
+            const showHotel = document.getElementById('chkHotel').checked;
+            const showCar = document.getElementById('chkCar').checked;
+
+            // Build Modules HTML conditionally
+            let modulesHtml = '';
+            if (showTour) {
+                modulesHtml += `
+                    <div class="module-card">
+                        <h4>${dict.tourTitle}</h4>
+                        <p>${dict.tourDesc}</p>
+                    </div>
+                `;
+            }
+            if (showHotel) {
+                modulesHtml += `
+                    <div class="module-card">
+                        <h4>${dict.hotelTitle}</h4>
+                        <p>${dict.hotelDesc}</p>
+                    </div>
+                `;
+            }
+            if (showCar) {
+                modulesHtml += `
+                    <div class="module-card">
+                        <h4>${dict.carTitle}</h4>
+                        <p>${dict.carDesc}</p>
+                    </div>
+                `;
+            }
+
+            // Construct full flyer
+            const flyerContainer = document.getElementById('flyerContent');
+            flyerContainer.innerHTML = `
+                <div class="flyer-header">
+                    <div class="flyer-logo">NOOTEO</div>
+                    <div class="flyer-tagline">${dict.tagline}</div>
+                </div>
+                
+                <h2>${dict.title}</h2>
+                
+                <p class="flyer-intro">
+                    ${dict.intro.replace("<span class='agency-name-highlight' id='view-agency'></span>", `<span class='agency-name-highlight'>${agencyName}</span>`)}
+                </p>
+                
+                <div class="modules-grid">
+                    <h3 style="font-size:1.1rem; margin-bottom:15px; color:#1e293b;">${dict.sectorTitle}</h3>
+                    ${modulesHtml || '<p style="color:#b91c1c; font-style:italic;">Veuillez sélectionner au moins un secteur d'activité.</p>'}
+                </div>
+                
+                <div class="flyer-features">
+                    <h3>${dict.featuresTitle}</h3>
+                    <ul>
+                        <li>${dict.feat1}</li>
+                        <li>${dict.feat2}</li>
+                        <li>${dict.feat3}</li>
+                    </ul>
+                </div>
+                
+                <div class="flyer-footer">
+                    <div class="badge-free">${dict.freeBadge}</div>
+                    <p style="font-size: 0.95rem; font-weight: 500; color: #475569;">${dict.footerText}</p>
+                </div>
+            `;
+        }
+
+        // Initial render
+        updateFlyer();
+    </script>
+</body>
+</html>
