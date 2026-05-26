@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nooteo - Générateur de Pitch & Flyer Commercial</title>
+    <title>Nooteo - Générateur de Propositions Commerciales</title>
     <style>
         :root {
             --primary-color: #1e3a8a;
@@ -26,19 +26,19 @@
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
-            line-height: 1.5;
+            line-height: 1.6;
             padding: 20px;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: 450px 1fr;
+            grid-template-columns: 400px 1fr;
             gap: 25px;
         }
 
-        @media (max-width: 900px) {
+        @media (max-width: 1024px) {
             .container {
                 grid-template-columns: 1fr;
             }
@@ -55,7 +55,7 @@
         }
 
         header h1 {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             margin-bottom: 5px;
         }
 
@@ -71,26 +71,28 @@
             border: 1px solid var(--border-color);
             box-shadow: 0 1px 3px rgb(0 0 0 / 0.1);
             height: fit-content;
+            position: sticky;
+            top: 20px;
         }
 
         .panel-preview {
             background: var(--card-bg);
-            padding: 40px;
+            padding: 50px;
             border-radius: 12px;
             border: 1px solid var(--border-color);
             box-shadow: 0 4px 10px rgb(0 0 0 / 0.05);
-            position: relative;
-            min-height: 600px;
+            min-height: 800px;
         }
 
         .section-title {
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: var(--primary-color);
             margin-bottom: 15px;
             padding-bottom: 5px;
             border-bottom: 2px solid var(--border-color);
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            font-weight: 700;
         }
 
         .form-group {
@@ -196,133 +198,100 @@
             background: #0f766e;
         }
 
-        /* FLYER DESIGN PREVIEW */
-        .flyer {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
+        /* DOCUMENT STYLING (PREVIEW) */
+        .doc-body {
             color: #334155;
+            font-size: 1.05rem;
         }
 
-        .flyer-header {
-            border-bottom: 3px solid var(--primary-color);
-            padding-bottom: 20px;
-            margin-bottom: 25px;
+        .doc-body h1 {
+            font-size: 1.9rem;
+            color: #0f172a;
+            margin-bottom: 20px;
+            line-height: 1.3;
+            border-bottom: 2px solid #cbd5e1;
+            padding-bottom: 10px;
         }
 
-        .flyer-logo {
-            font-size: 1.2rem;
-            font-weight: 800;
+        .doc-body h2 {
+            font-size: 1.35rem;
             color: var(--primary-color);
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-        }
-
-        .flyer-tagline {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-        }
-
-        .flyer h2 {
-            font-size: 1.8rem;
-            color: #1e293b;
+            margin-top: 30px;
             margin-bottom: 15px;
-            line-height: 1.2;
-        }
-
-        .flyer-intro {
-            font-size: 1.1rem;
-            color: #475569;
-            margin-bottom: 25px;
-            line-height: 1.6;
-        }
-
-        .agency-name-highlight {
-            color: var(--primary-color);
             font-weight: 700;
         }
 
-        .modules-grid {
-            margin: 25px 0;
-            display: block;
-        }
-
-        .module-card {
-            background: #f8fafc;
-            border-left: 4px solid var(--accent-color);
-            padding: 15px 20px;
+        .doc-body p {
             margin-bottom: 15px;
-            border-radius: 0 8px 8px 0;
+            text-align: justify;
         }
 
-        .module-card h4 {
-            font-size: 1.05rem;
-            color: #0f172a;
-            margin-bottom: 5px;
-        }
-
-        .module-card p {
-            font-size: 0.9rem;
-            color: #475569;
-        }
-
-        .flyer-features {
-            margin: 25px 0;
-            background: #f1f5f9;
-            padding: 20px;
+        .doc-meta {
+            background-color: #f8fafc;
+            padding: 15px 20px;
             border-radius: 8px;
+            margin-bottom: 25px;
+            border-left: 5px solid var(--primary-color);
         }
 
-        .flyer-features h3 {
-            font-size: 1.1rem;
-            margin-bottom: 12px;
-            color: var(--primary-color);
-        }
-
-        .flyer-features ul {
-            list-style-type: none;
-        }
-
-        .flyer-features li {
-            position: relative;
-            padding-left: 20px;
-            margin-bottom: 8px;
+        .doc-meta p {
+            margin-bottom: 6px;
             font-size: 0.95rem;
         }
 
-        .flyer-features li::before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: var(--accent-color);
-            font-weight: bold;
+        .doc-meta p:last-child {
+            margin-bottom: 0;
         }
 
-        .flyer-footer {
-            margin-top: 35px;
-            padding-top: 20px;
-            border-top: 1px solid var(--border-color);
-            text-align: center;
+        .doc-body ul {
+            margin-bottom: 20px;
+            padding-left: 25px;
         }
 
-        .badge-free {
-            display: inline-block;
-            background: #b91c1c;
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 0.85rem;
-            margin-bottom: 10px;
-            text-transform: uppercase;
+        .doc-body li {
+            margin-bottom: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            border: 1px solid #cbd5e1;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f1f5f9;
+            color: #0f172a;
+            font-weight: 700;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8fafc;
         }
 
         .print-btn {
-            margin-top: 20px;
             background: #475569;
         }
         
         .print-btn:hover {
             background: #334155;
+        }
+
+        .error-msg {
+            color: #b91c1c;
+            font-weight: bold;
+            font-style: italic;
+            padding: 20px;
+            background: #fef2f2;
+            border-radius: 6px;
+            border: 1px dashed #fca5a5;
+            margin: 20px 0;
         }
 
         @media print {
@@ -336,8 +305,8 @@
 <body>
 
     <header>
-        <h1>Nooteo Commercial Kit</h1>
-        <p>Générez instantanément un flyer personnalisé et adapté aux activités cibles de votre prospect.</p>
+        <h1>Nooteo - Générateur de Proposition Commerciale Évolutif</h1>
+        <p>Sélectionnez les critères à la carte. Le contenu se met à jour instantanément sans aucun bug d'affichage.</p>
     </header>
 
     <div class="container">
@@ -347,36 +316,36 @@
             <div class="form-group">
                 <div class="radio-btn-group">
                     <label class="radio-btn">
-                        <input type="radio" name="lang" value="fr" checked onchange="updateFlyer()">
+                        <input type="radio" name="lang" value="fr" checked onchange="updateProposal()">
                         <span>Français</span>
                     </label>
                     <label class="radio-btn">
-                        <input type="radio" name="lang" value="en" onchange="updateFlyer()">
+                        <input type="radio" name="lang" value="en" onchange="updateProposal()">
                         <span>English</span>
                     </label>
                 </div>
             </div>
 
-            <div class="section-title">2. Informations Agence</div>
+            <div class="section-title">2. Infos Client</div>
             <div class="form-group">
-                <label for="agencyName">Nom du prospect / de l'agence</label>
-                <input type="text" id="agencyName" value="Exotic Travel & Lodges" oninput="updateFlyer()">
+                <label for="clientName">Nom du Client / Directeur</label>
+                <input type="text" id="clientName" value="M. Jean Dupont / Madagascar Voyages" oninput="updateProposal()">
             </div>
 
-            <div class="section-title">3. Secteurs d'activités à inclure</div>
+            <div class="section-title">3. Activités du Prospect</div>
             <div class="form-group">
                 <div class="checkbox-group">
                     <label class="checkbox-label">
-                        <input type="checkbox" id="chkTour" checked onchange="updateFlyer()">
-                        Tour Opérateur / Circuits
+                        <input type="checkbox" id="chkTour" checked onchange="updateProposal()">
+                        Tour Opérateur (Circuits)
                     </label>
                     <label class="checkbox-label">
-                        <input type="checkbox" id="chkHotel" checked onchange="updateFlyer()">
-                        Hôtel / Lodge
+                        <input type="checkbox" id="chkHotel" checked onchange="updateProposal()">
+                        Hébergement (Lodge / Hôtel)
                     </label>
                     <label class="checkbox-label">
-                        <input type="checkbox" id="chkCar" checked onchange="updateFlyer()">
-                        Location de Voiture
+                        <input type="checkbox" id="chkCar" checked onchange="updateProposal()">
+                        Location de Voitures
                     </label>
                 </div>
             </div>
@@ -386,8 +355,8 @@
 
         <!-- LIVE PREVIEW PANEL -->
         <div class="panel-preview">
-            <div id="flyerContent" class="flyer">
-                <!-- Content injected dynamically via JavaScript -->
+            <div id="proposalContent" class="doc-body">
+                <!-- Dynamically generated through JavaScript -->
             </div>
         </div>
     </div>
@@ -395,118 +364,210 @@
     <script>
         const dictionary = {
             fr: {
-                tagline: "Plateforme Touristique Intégrée",
-                title: "Concentrez-vous sur vos voyageurs, Nooteo s'occupe du reste !",
-                intro: "Bonjour l'équipe de <span class='agency-name-highlight' id='view-agency'></span>,<br><br>Gérer simultanément plusieurs facettes du tourisme demande un temps précieux. Nooteo vous propose de centraliser votre visibilité sans ajouter de tâches administratives complexes à votre quotidien.",
-                sectorTitle: "Une visibilité sur-mesure pour vos métiers :",
-                tourTitle: "🌐 Module Tour Opérateur & Circuits",
-                tourDesc: "Vos itinéraires et excursions sont propulsés sur des cartes interactives intelligentes, captant les voyageurs dès la planification de leur voyage.",
-                hotelTitle: "🏨 Module Hébergement & Lodge",
-                hotelDesc: "Votre établissement est directement géolocalisé et connecté aux circuits régionaux. Les clients réservent là où l'aventure se déroule.",
-                carTitle: "🚗 Module Flotte & Location de Véhicules",
-                carDesc: "Proposez vos voitures comme solution logistique naturelle dès que le client planifie ou valide son circuit sur notre carte.",
-                featuresTitle: "Pourquoi choisir Nooteo ?",
-                feat1: "Zéro maintenance de page : Vos contenus sont optimisés et mis en valeur automatiquement.",
-                feat2: "Visibilité accrue : Atteignez une clientèle nationale et internationale qualifiée.",
-                feat3: "Technologie moderne : Solution 'API-First' avec cartes GPS interactives et avis vérifiés.",
-                freeBadge: "Zéro Abonnement Obligatoire",
-                footerText: "Rejoignez l'écosystème Nooteo dès aujourd'hui sous notre formule Freemium et commencez sans frais fixes."
+                title: "Nooteo : Concentrez-vous sur votre cœur de métier, nous gérons votre visibilité",
+                attention: "À l'attention de :",
+                activity: "Activité :",
+                subject: "Objet :",
+                subjectValue: "Simplification de votre gestion digitale et acquisition client sans abonnement obligatoire",
+                
+                h1_constat: "1. Le Constat : Trop de temps précieux alloué au digital",
+                constat_intro: "En tant qu'acteur multi-facettes du tourisme, votre véritable valeur ajoutée réside sur le terrain : l'accueil de vos clients, la parfaite gestion de vos services et la création d'itinéraires mémorables.",
+                constat_list_intro: "Pourtant, la digitalisation vous impose aujourd'hui de lourdes tâches chronophages :",
+                constat_li1: "Maintenir un site internet à jour (tarifs, disponibilités, photos).",
+                constat_li2: "Créer du contenu pour exister sur les moteurs de recherche.",
+                constat_li3: "Gérer la visibilité de vos activités distinctes qui peinent parfois à se synchroniser en ligne.",
+
+                h1_solution: "2. La Solution Nooteo : L'Écosystème Intégré "Expérience-First"",
+                sol_p1: "Nooteo renverse l'approche traditionnelle en adoptant une vision centrée sur la <strong>Destination</strong> et l'<strong>Expérience</strong>. Les voyageurs se demandent d'abord <em>"Quoi faire ?"</em> avant de chercher <em>"Où dormir ?"</em> ou <em>"Comment se déplacer ?"</em>.",
+                sol_p2: "Grâce à notre plateforme, vos activités sont nativement interconnectées à travers un pivot unique : <strong>le Circuit</strong>.",
+                
+                th_activity: "Votre Activité",
+                th_integration: "Intégration dans l'Écosystème Nooteo",
+                th_benefit: "Votre bénéfice opérationnel",
+                
+                row_tour_act: "<strong>Tour Opérateur (Circuits)</strong>",
+                row_tour_int: "Vos itinéraires sont mis en valeur sur nos cartes interactives et pages destinations optimisées pour le SEO.",
+                row_tour_ben: "Plus besoin de rédiger des blocs de textes complexes pour votre propre site.",
+                
+                row_hotel_act: "<strong>Lodge / Hébergement</strong>",
+                row_hotel_int: "Votre établissement est automatiquement lié aux circuits et activités de la région.",
+                row_hotel_ben: "Une visibilité naturelle auprès des voyageurs qui planifient leur parcours.",
+                
+                row_car_act: "<strong>Location de Voitures</strong>",
+                row_car_int: "Vos véhicules sont proposés comme solution logistique immédiate au sein des circuits découverts par l'utilisateur.",
+                row_car_ben: "Vos voitures sont louées au moment précis où le client valide son voyage.",
+
+                h1_maintenance: "3. Zéro maintenance de page, Visibilité automatisée",
+                maint_p1: "Avec Nooteo, vous n'avez plus à vous soucier de la maintenance technique de votre page ou de l'optimisation pour les moteurs de recherche.",
+                maint_li1: "<strong>Pages Riches & SEO inclus :</strong> Nooteo propulse vos fiches prestataires détaillées grâce à son architecture moderne "API-First" et ses pages à forte valeur ajoutée (photos, vidéos, géolocalisation GPS).",
+                maint_li2: "<strong>Gestion centralisée :</strong> Vous bénéficiez d'un espace prestataire ultra-simple pour piloter vos informations fondamentales, suivre vos statistiques et répondre aux avis vérifiés.",
+                maint_li3: "<strong>Effet Réseau :</strong> La plateforme attire les touristes nationaux et internationaux en quête d'authenticité, vous apportant un flux continu de clients qualifiés sans effort marketing de votre part.",
+
+                h1_model: "4. Un Modèle Économique Flexible et Sans Risque : Le Freemium",
+                model_p1: "Nous comprenons que chaque charge fixe compte. C'est pourquoi Nooteo s'adapte totalement à vos besoins sans vous emprisonner dans des frais fixes :",
+                model_li1: "<strong>Option 100% Gratuite :</strong> Vous pouvez opter pour notre solution sans avoir à payer le moindre abonnement sur le site. Vous bénéficiez d'une présence simple, claire et efficace pour vos activités.",
+                model_li2: "<strong>Option Premium (Optionnelle) :</strong> Si vous souhaitez booster ponctuellement votre visibilité, accéder à des statistiques avancées ou obtenir le badge "Vérifié" pour rassurer vos clients, un modèle premium est disponible, mais il reste strictement optionnel.",
+
+                h1_conclusion: "Conclusion : Redevenez un Artisan de l'Expérience",
+                conclusion_p1: "Laissez Nooteo devenir votre vitrine technologique globale. Confiez-nous la complexité digitale, oubliez les tracas de mise à jour de contenu, et concentrez toute votre énergie là où bat le cœur de votre métier : faire vivre des moments d'exception à vos voyageurs.",
+                
+                error_select: "Veuillez sélectionner au moins un secteur d'activité dans le panneau de gauche."
             },
             en: {
-                tagline: "Integrated Tourism Platform",
-                title: "Focus on your travelers, Nooteo takes care of the rest!",
-                intro: "Hello to the team at <span class='agency-name-highlight' id='view-agency'></span>,<br><br>Managing multiple facets of tourism takes precious time. Nooteo helps you centralize your visibility without adding complex administrative tasks to your daily routine.",
-                sectorTitle: "Tailored visibility for your specific operations:",
-                tourTitle: "🌐 Tour Operator & Itineraries Module",
-                tourDesc: "Your itineraries and day-trips are promoted on smart interactive maps, capturing travelers right from their initial planning phase.",
-                hotelTitle: "🏨 Accommodation & Lodge Module",
-                hotelDesc: "Your property is directly geolocated and linked to regional circuits. Clients book exactly where the experience happens.",
-                carTitle: "🚗 Fleet & Car Rental Module",
-                carDesc: "Offer your vehicles as a natural logistical solution the moment a customer plans or confirms their trip on our map.",
-                featuresTitle: "Why choose Nooteo?",
-                feat1: "Zero page maintenance: Your content is automatically optimized and highlighted.",
-                feat2: "Increased visibility: Reach qualified domestic and international travelers.",
-                feat3: "Modern technology: 'API-First' solution with interactive GPS maps and verified reviews.",
-                freeBadge: "No Mandatory Subscription",
-                footerText: "Join the Nooteo ecosystem today under our Freemium model and start without any fixed costs."
+                title: "Nooteo: Focus on your core business, we manage your visibility",
+                attention: "For the attention of:",
+                activity: "Operation Type:",
+                subject: "Subject:",
+                subjectValue: "Simplification of your digital management and client acquisition with no mandatory subscription",
+                
+                h1_constat: "1. The Observation: Too much precious time allocated to digital",
+                constat_intro: "As a multi-faceted tourism professional, your true added value is on the ground: welcoming your guests, flawlessly managing your services, and creating memorable itineraries.",
+                constat_list_intro: "Yet, digitalization imposes heavy and time-consuming tasks upon you every day:",
+                constat_li1: "Keeping a website up to date (rates, availability, photos).",
+                constat_li2: "Creating digital content to exist on search engines.",
+                constat_li3: "Managing visibility for your distinct activities that sometimes struggle to synchronize online.",
+
+                h1_solution: "2. The Nooteo Solution: The Integrated "Experience-First" Ecosystem",
+                sol_p1: "Nooteo reverses the traditional approach by adopting a vision centered on the <strong>Destination</strong> and the <strong>Experience</strong>. Travelers first ask <em>"What to do?"</em> before looking for <em>"Where to sleep?"</em> or <em>"How to get around?"</em>.",
+                sol_p2: "Thanks to our platform, your activities are natively interconnected through a unique pivot: <strong>the Itinerary</strong>.",
+                
+                th_activity: "Your Activity",
+                th_integration: "Integration into the Nooteo Ecosystem",
+                th_benefit: "Your Operational Benefit",
+                
+                row_tour_act: "<strong>Tour Operator (Itineraries)</strong>",
+                row_tour_int: "Your itineraries are highlighted on our smart interactive maps and destination pages optimized for SEO.",
+                row_tour_ben: "No need to write complex text blocks for your own website anymore.",
+                
+                row_hotel_act: "<strong>Lodge / Accommodation</strong>",
+                row_hotel_int: "Your property is automatically linked to regional itineraries and activities.",
+                row_hotel_ben: "Natural visibility to travelers who are planning their route.",
+                
+                row_car_act: "<strong>Car Rental</strong>",
+                row_car_int: "Your vehicles are suggested as an immediate logistical solution within the itineraries discovered by users.",
+                row_car_ben: "Your cars are rented at the exact moment the client confirms their trip.",
+
+                h1_maintenance: "3. Zero Page Maintenance, Automated Visibility",
+                maint_p1: "With Nooteo, you no longer have to worry about the technical maintenance of your page or search engine optimization.",
+                maint_li1: "<strong>Rich Pages & SEO included:</strong> Nooteo propules your detailed provider profiles thanks to its modern "API-First" architecture and high-value pages (photos, videos, GPS geolocation).",
+                maint_li2: "<strong>Centralized Management:</strong> Benefit from an ultra-simple provider dashboard to manage your fundamental info, monitor statistics, and respond to verified reviews.",
+                maint_li3: "<strong>Network Effect:</strong> The platform attracts domestic and international tourists looking for authenticity, bringing you a continuous flow of qualified clients without any marketing effort on your part.",
+
+                h1_model: "4. A Flexible and Risk-Free Business Model: Freemium",
+                model_p1: "We understand that every fixed cost matters. That's why Nooteo adapts fully to your needs without locking you into fixed fees:",
+                model_li1: "<strong>100% Free Option:</strong> You can opt for our solution without having to pay any subscription fee on the platform. You enjoy a simple, clear, and effective presence for your activities.",
+                model_li2: "<strong>Premium Option (Optional):</strong> If you wish to temporarily boost your visibility, access advanced statistics, or get the "Verified" badge to reassure your clients, a premium model is available, but remains strictly optional.",
+
+                h1_conclusion: "Conclusion: Become an Artisan of the Experience Again",
+                conclusion_p1: "Let Nooteo become your global technological showcase. Entrust us with digital complexity, forget the hassle of updating content, and concentrate all your energy where the heart of your business beats: bringing exceptional moments to life for your travelers.",
+                
+                error_select: "Please select at least one activity sector from the left control panel."
             }
         };
 
-        function updateFlyer() {
-            // Get active language
+        function updateProposal() {
+            // Get selected language
             const lang = document.querySelector('input[name="lang"]:checked').value;
             const dict = dictionary[lang];
             
-            // Get field values
-            const agencyName = document.getElementById('agencyName').value || "Votre Agence";
+            // Get custom input values
+            const clientName = document.getElementById('clientName').value || "[Nom du Client]";
             const showTour = document.getElementById('chkTour').checked;
             const showHotel = document.getElementById('chkHotel').checked;
             const showCar = document.getElementById('chkCar').checked;
 
-            // Build Modules HTML conditionally
-            let modulesHtml = '';
-            if (showTour) {
-                modulesHtml += `
-                    <div class="module-card">
-                        <h4>${dict.tourTitle}</h4>
-                        <p>${dict.tourDesc}</p>
-                    </div>
-                `;
+            // Generate the dynamic Activity header string
+            let activitiesArray = [];
+            if (lang === 'fr') {
+                if (showTour) activitiesArray.push("Tour Opérateur (Circuits)");
+                if (showHotel) activitiesArray.push("Hébergement (Lodge)");
+                if (showCar) activitiesArray.push("Location de Voitures");
+            } else {
+                if (showTour) activitiesArray.push("Tour Operator (Itineraries)");
+                if (showHotel) activitiesArray.push("Accommodation (Lodge)");
+                if (showCar) activitiesArray.push("Car Rental");
             }
-            if (showHotel) {
-                modulesHtml += `
-                    <div class="module-card">
-                        <h4>${dict.hotelTitle}</h4>
-                        <p>${dict.hotelDesc}</p>
-                    </div>
-                `;
-            }
-            if (showCar) {
-                modulesHtml += `
-                    <div class="module-card">
-                        <h4>${dict.carTitle}</h4>
-                        <p>${dict.carDesc}</p>
-                    </div>
-                `;
+            const activitiesString = activitiesArray.join(', ') || "---";
+
+            // Safeguard if nothing is selected
+            if (!showTour && !showHotel && !showCar) {
+                document.getElementById('proposalContent').innerHTML = `<div class="error-msg">${dict.error_select}</div>`;
+                return;
             }
 
-            // Construct full flyer
-            const flyerContainer = document.getElementById('flyerContent');
-            flyerContainer.innerHTML = `
-                <div class="flyer-header">
-                    <div class="flyer-logo">NOOTEO</div>
-                    <div class="flyer-tagline">${dict.tagline}</div>
+            // Build dynamic table rows safely without string character conflicts
+            let tableRowsHtml = '';
+            if (showTour) {
+                tableRowsHtml += `<tr><td>${dict.row_tour_act}</td><td>${dict.row_tour_int}</td><td>${dict.row_tour_ben}</td></tr>`;
+            }
+            if (showHotel) {
+                tableRowsHtml += `<tr><td>${dict.row_hotel_act}</td><td>${dict.row_hotel_int}</td><td>${dict.row_hotel_ben}</td></tr>`;
+            }
+            if (showCar) {
+                tableRowsHtml += `<tr><td>${dict.row_car_act}</td><td>${dict.row_car_int}</td><td>${dict.row_car_ben}</td></tr>`;
+            }
+
+            // Combine everything into the full preview box
+            const previewContainer = document.getElementById('proposalContent');
+            previewContainer.innerHTML = `
+                <h1>${dict.title}</h1>
+                
+                <div class="doc-meta">
+                    <p><strong>${dict.attention}</strong> ${clientName}</p>
+                    <p><strong>${dict.activity}</strong> ${activitiesString}</p>
+                    <p><strong>${dict.subject}</strong> ${dict.subjectValue}</p>
                 </div>
                 
-                <h2>${dict.title}</h2>
-                
-                <p class="flyer-intro">
-                    ${dict.intro.replace("<span class='agency-name-highlight' id='view-agency'></span>", `<span class='agency-name-highlight'>${agencyName}</span>`)}
-                </p>
-                
-                <div class="modules-grid">
-                    <h3 style="font-size:1.1rem; margin-bottom:15px; color:#1e293b;">${dict.sectorTitle}</h3>
-                    ${modulesHtml || '<p style="color:#b91c1c; font-style:italic;">Veuillez sélectionner au moins un secteur d'activité.</p>'}
-                </div>
-                
-                <div class="flyer-features">
-                    <h3>${dict.featuresTitle}</h3>
-                    <ul>
-                        <li>${dict.feat1}</li>
-                        <li>${dict.feat2}</li>
-                        <li>${dict.feat3}</li>
-                    </ul>
-                </div>
-                
-                <div class="flyer-footer">
-                    <div class="badge-free">${dict.freeBadge}</div>
-                    <p style="font-size: 0.95rem; font-weight: 500; color: #475569;">${dict.footerText}</p>
-                </div>
+                <hr style="border: 0; border-top: 1px solid #cbd5e1; margin: 20px 0;">
+
+                <h2>${dict.h1_constat}</h2>
+                <p>${dict.constat_intro}</p>
+                <p>${dict.constat_list_intro}</p>
+                <ul>
+                    <li>${dict.constat_li1}</li>
+                    <li>${dict.constat_li2}</li>
+                    <li>${dict.constat_li3}</li>
+                </ul>
+
+                <h2>${dict.h1_solution}</h2>
+                <p>${dict.sol_p1}</p>
+                <p>${dict.sol_p2}</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>${dict.th_activity}</th>
+                            <th>${dict.th_integration}</th>
+                            <th>${dict.th_benefit}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${tableRowsHtml}
+                    </tbody>
+                </table>
+
+                <h2>${dict.h1_maintenance}</h2>
+                <p>${dict.maint_p1}</p>
+                <ul>
+                    <li>${dict.maint_li1}</li>
+                    <li>${dict.maint_li2}</li>
+                    <li>${dict.maint_li3}</li>
+                </ul>
+
+                <h2>${dict.h1_model}</h2>
+                <p>${dict.model_p1}</p>
+                <ul>
+                    <li>${dict.model_li1}</li>
+                    <li>${dict.model_li2}</li>
+                </ul>
+
+                <h2>${dict.h1_conclusion}</h2>
+                <p>${dict.conclusion_p1}</p>
             `;
         }
 
-        // Initial render
-        updateFlyer();
+        // Run on first load
+        updateProposal();
     </script>
 </body>
 </html>
