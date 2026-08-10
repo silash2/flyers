@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Nooteo – Générateur de Flyer A4</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -16,7 +16,8 @@
   --border:#e2e8f0; --text:#1e293b; --muted:#64748b;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'DM Sans',sans-serif;background:#dde3ef;color:var(--text);min-height:100vh;padding:20px;}
+html{overflow-x:hidden;}
+body{font-family:'DM Sans',sans-serif;background:#dde3ef;color:var(--text);min-height:100vh;padding:20px;overflow-x:hidden;}
 
 /* ── LAYOUT ── */
 .app{max-width:1380px;margin:0 auto;display:grid;grid-template-columns:300px 1fr;grid-template-rows:auto 1fr;gap:18px;align-items:start;}
@@ -48,7 +49,7 @@ body{font-family:'DM Sans',sans-serif;background:#dde3ef;color:var(--text);min-h
 .lang-tab input:checked+span{border-color:var(--blue);background:var(--blue);color:white;box-shadow:0 2px 8px rgba(30,58,138,.3);}
 
 /* inputs texte */
-.text-input{width:100%;padding:8px 11px;border:1.5px solid var(--border);border-radius:7px;font-family:'DM Sans',sans-serif;font-size:.85rem;color:var(--text);transition:border-color .2s;background:var(--off);margin-bottom:7px;}
+.text-input{width:100%;padding:8px 11px;border:1.5px solid var(--border);border-radius:7px;font-family:'DM Sans',sans-serif;font-size:16px;color:var(--text);transition:border-color .2s;background:var(--off);margin-bottom:7px;}
 .text-input:last-child{margin-bottom:0;}
 .text-input:focus{outline:none;border-color:var(--blue);background:white;}
 
@@ -81,8 +82,11 @@ body{font-family:'DM Sans',sans-serif;background:#dde3ef;color:var(--text);min-h
 .btn-print:hover{background:#eff6ff;}
 
 /* ── PREVIEW ── */
-.preview-wrap{display:flex;flex-direction:column;align-items:center;gap:0;}
+.preview-wrap{display:flex;flex-direction:column;align-items:center;gap:0;width:100%;min-width:0;}
 .preview-label{font-size:.65rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#8896b0;margin-bottom:12px;align-self:flex-start;}
+
+/* wrapper qui contient le A4 mis à l'échelle */
+.preview-outer{width:794px;height:1123px;overflow:hidden;flex-shrink:0;}
 
 /* ═══════════════════════════════════
    A4 PAGE — 794×1123px exact
@@ -95,6 +99,7 @@ body{font-family:'DM Sans',sans-serif;background:#dde3ef;color:var(--text);min-h
   overflow:hidden;
   display:flex;flex-direction:column;
   flex-shrink:0;
+  transform-origin:top left;
 }
 
 /* HEADER */
@@ -181,12 +186,38 @@ body{font-family:'DM Sans',sans-serif;background:#dde3ef;color:var(--text);min-h
 /* error */
 .flyer-error{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:10px;color:#991b1b;font-weight:600;padding:40px;text-align:center;}
 
-/* PRINT */
+/* ═══════════════════════════════════
+   RESPONSIVE / MOBILE
+═══════════════════════════════════ */
+@media (max-width:1140px){
+  .app{grid-template-columns:1fr;}
+  .controls{position:static;order:2;max-width:520px;margin:0 auto;width:100%;}
+  .preview-wrap{order:1;}
+}
+
+@media (max-width:640px){
+  body{padding:10px;}
+  .app{gap:12px;}
+
+  .app-header{padding:10px 14px;gap:10px;flex-wrap:wrap;border-radius:10px;}
+  .app-header img{height:32px;}
+  .app-header h1{font-size:.92rem;}
+  .app-header p{font-size:.64rem;}
+  .badge{font-size:.6rem;padding:3px 9px;}
+
+  .controls{padding:14px;border-radius:10px;}
+  .ctrl-section{margin-bottom:14px;}
+
+  .preview-label{font-size:.6rem;margin-bottom:8px;}
+  .preview-wrap{padding:0;}
+}
+
 @media print{
   body,html{background:white!important;padding:0!important;}
   .app-header,.controls,.preview-label{display:none!important;}
   .app{grid-template-columns:1fr;}
-  .a4{box-shadow:none;width:794px;height:1123px;}
+  .preview-outer{width:794px!important;height:1123px!important;overflow:visible!important;}
+  .a4{box-shadow:none;width:794px;height:1123px;transform:none!important;}
 }
 @keyframes spin{to{transform:rotate(360deg);}}
 </style>
@@ -283,7 +314,9 @@ body{font-family:'DM Sans',sans-serif;background:#dde3ef;color:var(--text);min-h
   <!-- PREVIEW -->
   <div class="preview-wrap">
     <div class="preview-label">📄 Aperçu — Format A4</div>
-    <div id="flyer"></div>
+    <div class="preview-outer" id="previewOuter">
+      <div id="flyer"></div>
+    </div>
   </div>
 
 </div><!-- /app -->
@@ -318,7 +351,8 @@ const D = {
     stat3:"98%", stat3l:"Satisfaction client",
     footer_tag:"Voyages &amp; <span>Découvertes</span>",
     contact:"Contact",
-    email:"contact.nooteo@gmail.com",
+    email:"nooteo.team@nooteo.com",
+    web:"www.nooteo.com",
     error:"Sélectionnez au moins une activité.",
     acts:{
       Tour: {icon:"🧭",name:"Tour Opérateur (Circuits)",desc:"Vos itinéraires mis en valeur sur nos cartes interactives et pages destinations optimisées SEO.",benefit:"✓ Plus besoin de rédiger du contenu complexe pour votre propre site."},
@@ -353,7 +387,8 @@ const D = {
     stat3:"98%", stat3l:"Customer satisfaction",
     footer_tag:"Voyages &amp; <span>Discoveries</span>",
     contact:"Contact",
-    email:"contact.nooteo@gmail.com",
+    email:"nooteo.team@nooteo.com",
+    web:"www.nooteo.com",
     error:"Please select at least one activity.",
     acts:{
       Tour: {icon:"🧭",name:"Tour Operator (Itineraries)",desc:"Your itineraries showcased on interactive maps and SEO-optimized destination pages.",benefit:"✓ No need to write complex content for your own website anymore."},
@@ -396,6 +431,24 @@ function toggleAct(key, el){
   render();
 }
 
+/* ─────────────── SCALING RESPONSIVE DE L'APERÇU ─────────────── */
+function fitPreview(){
+  const page  = document.getElementById('page1');
+  const outer = document.getElementById('previewOuter');
+  if(!page || !outer) return;
+
+  // largeur disponible = celle de la colonne d'aperçu (moins un petit padding de sécurité)
+  const wrap = outer.parentElement;
+  const available = wrap.clientWidth - 4;
+  const scale = Math.min(1, available / 794);
+
+  page.style.transform = `scale(${scale})`;
+  outer.style.width  = (794 * scale) + 'px';
+  outer.style.height = (1123 * scale) + 'px';
+}
+window.addEventListener('resize', fitPreview);
+window.addEventListener('orientationchange', fitPreview);
+
 /* ─────────────── RENDER ─────────────── */
 function render(){
   const l = lang(), d = D[l];
@@ -405,7 +458,8 @@ function render(){
   const container = document.getElementById('flyer');
 
   if(!showTour && !showHotel && !showCar){
-    container.innerHTML = `<div class="a4"><div class="flyer-error"><div style="font-size:2.5rem">⚠️</div><p>${d.error}</p></div></div>`;
+    container.innerHTML = `<div class="a4" id="page1"><div class="flyer-error"><div style="font-size:2.5rem">⚠️</div><p>${d.error}</p></div></div>`;
+    fitPreview();
     return;
   }
 
@@ -507,9 +561,13 @@ function render(){
       <div class="footer-contact">
         <div class="fc-title">${d.contact}</div>
         <a href="mailto:${d.email}">${d.email}</a>
+        |
+        <a href= "www.nooteo.com">www.nooteo.com</a>
       </div>
     </div>
   </div>`;
+
+  fitPreview();
 }
 
 /* ─────────────── EXPORT PDF ─────────────── */
@@ -521,7 +579,12 @@ async function exportPDF(){
   try {
     const {jsPDF} = window.jspdf;
     const pdf = new jsPDF({unit:'mm',format:'a4',orientation:'portrait'});
-    const c = await html2canvas(document.getElementById('page1'),{scale:2,useCORS:true,logging:false});
+    const page = document.getElementById('page1');
+    // on capture le noeud sans le transform d'échelle appliqué à l'écran
+    const prevTransform = page.style.transform;
+    page.style.transform = 'none';
+    const c = await html2canvas(page,{scale:2,useCORS:true,logging:false});
+    page.style.transform = prevTransform;
     pdf.addImage(c.toDataURL('image/jpeg',.97),'JPEG',0,0,210,297);
     const name = (client()+' '+company()).trim().replace(/[^a-zA-Z0-9\-_]/g,'_');
     pdf.save(`Nooteo_Proposition_${name}.pdf`);
